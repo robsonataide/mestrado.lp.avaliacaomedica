@@ -1,0 +1,85 @@
+﻿<Window x:Class="AvaliacaoMedica.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ferramenta de Diagnóstico Físico" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="atividade-fisica-e-saúde.ico">
+        
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="10,0,0,0" >
+            <Label FontFamily="Segoe UI Light" FontSize="24">Ferramenta de Diagnóstico Físico</Label>
+        </Grid>
+        
+        <TabControl Margin="10" VerticalAlignment="Stretch" Grid.Row="1" HorizontalAlignment="Stretch">
+            <TabItem Header="Avaliação Médica">
+                <Grid Background="White" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0">
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Altura</Label>
+                            <TextBox Name="TxtAltura" ></TextBox>
+                            
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Pressão Arterial Sistólica</Label>
+                            <TextBox Name="TxtSistolica" ></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Taxa de Colesterol</Label>
+                            <TextBox ></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Taxa de Glicose</Label>
+                            <TextBox ></TextBox>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Peso</Label>
+                            <TextBox ></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Pressão Arterial Sistólica</Label>
+                            <TextBox ></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Taxa de Triglicerídeos</Label>
+                            <TextBox ></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Frequência cardíaca de repouso</Label>
+                            <TextBox ></TextBox>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                    
+                </Grid>
+            </TabItem>
+            <TabItem Header="Dados de Pressão">
+                <Grid Background="White"/>
+            </TabItem>
+        </TabControl>
+
+        <Button Name="btnDiagnose" 
+                Content="Gerar Diagnóstico" 
+                Grid.Row="2" 
+                Margin="20"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center" Height="33" Width="128"/>
+
+    </Grid>
+</Window>
