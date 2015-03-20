@@ -24,14 +24,25 @@ namespace AnthropometryLibrary.Calc
 
             this.WaistHipRelationCalc();
 
+            RMCalcLib rmCalcLib = new RMCalcLib();
+            this.person = rmCalcLib.Calculate(this.person);
+
+            this.METCalc();
+
             return this.person;
         }
 
         private void WaistHipRelationCalc()
         {
-            double waist = person.Circumferences.Where(c => c.Type.Equals(TypeCircumferenceEnum.Waist)).First<Circumference>().Value;
-            double hip = person.Circumferences.Where(c => c.Type.Equals(TypeCircumferenceEnum.Hip)).First<Circumference>().Value;
+            double waist = this.person.Circumferences.Where(c => c.Type.Equals(TypeCircumferenceEnum.Waist)).First<Circumference>().Value;
+            double hip = this.person.Circumferences.Where(c => c.Type.Equals(TypeCircumferenceEnum.Hip)).First<Circumference>().Value;
             this.person.WaistHipRelation = waist / hip;
+        }
+
+        private void METCalc()
+        {
+            double MET = person.MaxVO2 / person.RestVO2;
+            this.person.MET = MET;
         }
     }
 }

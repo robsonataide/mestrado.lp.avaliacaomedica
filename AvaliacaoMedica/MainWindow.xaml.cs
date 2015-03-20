@@ -26,16 +26,9 @@ namespace AvaliacaoMedica
         public MainWindow()
         {
             InitializeComponent();
-            this.TxtAltura.KeyUp += MaskNumber;
-            this.TxtSistolica.KeyUp += MaskNumber;
+            //this.TxtAltura.KeyUp += MaskNumber;
             this.person = new Person();
-            btnDiagnose.Click += FillPerson;            
-        }
-
-        private void FillPerson(object sender, RoutedEventArgs e)
-        {
-            this.person.Height = Convert.ToDouble(TxtAltura.Text);
-            Console.WriteLine(person.Height);
+            
         }
 
         private void MaskNumber(object sender, KeyEventArgs e)

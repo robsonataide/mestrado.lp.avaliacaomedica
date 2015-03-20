@@ -17,9 +17,11 @@
         <TabControl Margin="10" VerticalAlignment="Stretch" Grid.Row="1" HorizontalAlignment="Stretch">
             <TabItem Header="Avaliação Médica">
                 <Grid Background="White" Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="5*"/>
+                   <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="25*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Vertical" Grid.Column="0">
                         <StackPanel Orientation="Vertical" Margin="10" >

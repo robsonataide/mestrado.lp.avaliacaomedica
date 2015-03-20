@@ -29,5 +29,6 @@ namespace AnthropometryLibrary.Models
 
         //calculado (IMC)
         public double BodyMassIndex { get; set; }
+
     }
 }

@@ -54,13 +54,40 @@ namespace AnthropometryLibrary.Models
         public double WaistHipRelation { get; set; }
         
         //calculado
-        public double MaxVO2{ get; set; }
+        public double MaxVO2
+        {
+            get{
+                if (this.TimeTest2400 != null) { 
+                    return (480 / this.TimeTest2400) +3.5;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
 
         //entrada de dados
-        public List<MaxLoad> MaxLoadsForOneRepeatTime { get; set; }
+        public List<Load> MaxLoadsForOneRepeatTime { get; set; }
         
         //calculado
-        public List<MaxLoad> MaxLoads { get; set; }
+        public List<Load> MaxLoads { get; set; }
 
+        //calculado
+        public double BodySlimMass
+        {
+            get{
+                return this.Weight - this.BodyComposition.FatWeight;
+            }
+        }
+
+        //entrada de dados
+        public double TimeTest2400 { get; set; }
+
+        //calculado
+        public double MET { get; set; }
+
+        //entrada de dados
+        public double RestVO2 { get; set; }
     }
 }

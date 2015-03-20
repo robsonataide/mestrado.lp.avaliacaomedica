@@ -6,16 +6,16 @@ using System.Text;
 
 namespace AnthropometryLibrary.Models
 {
-    public class MaxLoad 
+    public class Load 
     {
         //entrada de dados e calculado
         public TypeRMEnum TypeRM{ get; set; }
         //entrada de dados e calculado
         public int RepeatAmount { get; set; }
         //calculado
-        public double Value { get; set; }
+        public double MaxLoad { get; set; }
 
         //entrada de dados
-        public double Weight { get; set; }
+        public double SubMaxLoad { get; set; }
     }
 }
