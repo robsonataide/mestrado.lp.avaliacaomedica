@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Ferramenta de Diagnóstico Físico" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="atividade-fisica-e-saúde.ico">
-        
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -13,21 +13,50 @@
         <Grid Grid.Row="0" Margin="10,0,0,0" >
             <Label FontFamily="Segoe UI Light" FontSize="24">Ferramenta de Diagnóstico Físico</Label>
         </Grid>
-        
+
         <TabControl Margin="10" VerticalAlignment="Stretch" Grid.Row="1" HorizontalAlignment="Stretch">
             <TabItem Header="Avaliação Médica">
                 <Grid Background="White" Margin="10">
-                   <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25*"/>
-                        <ColumnDefinition Width="25*"/>
-                        <ColumnDefinition Width="25*"/>
-                        <ColumnDefinition Width="25*"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <StackPanel Orientation="Vertical" Grid.Column="0" >
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Nome</Label>
+                            <TextBox Name="TxtNome" ></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Idade</Label>
+                            <TextBox Name="TxtIdade" ></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Sexo</Label>
+                            <ComboBox Name="CbxSexo" SelectionChanged="CbxSexo_SelectionChanged" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Peso</Label>
+                            <TextBox Name="TxtPeso" ></TextBox>
+                        </StackPanel>
+
                         <StackPanel Orientation="Vertical" Margin="10" >
                             <Label>Altura</Label>
                             <TextBox Name="TxtAltura" ></TextBox>
-                            
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Frequência cardíaca de repouso</Label>
+                            <TextBox Name="TxtBMPRepouso" ></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="10" >
+                            <Label>Tempo para percorrer 2.400 metros</Label>
+                            <TextBox Name="TxtTempo2400" ></TextBox>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="10" >
@@ -36,43 +65,56 @@
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="10" >
-                            <Label>Taxa de Colesterol</Label>
-                            <TextBox ></TextBox>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical" Margin="10" >
-                            <Label>Taxa de Glicose</Label>
-                            <TextBox ></TextBox>
-                        </StackPanel>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Vertical" Grid.Column="1">
-                        <StackPanel Orientation="Vertical" Margin="10" >
-                            <Label>Peso</Label>
-                            <TextBox ></TextBox>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical" Margin="10" >
-                            <Label>Pressão Arterial Sistólica</Label>
-                            <TextBox ></TextBox>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical" Margin="10" >
-                            <Label>Taxa de Triglicerídeos</Label>
-                            <TextBox ></TextBox>
+                            <Label>Pressão Arterial Diastólica</Label>
+                            <TextBox Name="TxtDiastolica" ></TextBox>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="10" >
                             <Label>Frequência cardíaca de repouso</Label>
                             <TextBox ></TextBox>
                         </StackPanel>
-                        
+
                     </StackPanel>
-                    
+
                 </Grid>
             </TabItem>
-            <TabItem Header="Dados de Pressão">
-                <Grid Background="White"/>
+            <TabItem Header="Medidas Antropométicas">
+                <Grid Background="White" Height="366" VerticalAlignment="Bottom">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="92*"/>
+                            <ColumnDefinition Width="291*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,10">
+                            <StackPanel Orientation="Horizontal">
+                                <Label>Tipo de Dobra</Label>
+                                <ComboBox Name="CbxTipoDobra" Width="137" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="15,0,0,0">
+                                <Label>Valor da Dobra</Label>
+                                <TextBox Name="TxtValorDobra" Width="68" />
+                            </StackPanel>
+                            <StackPanel Margin="15,0,0,0">
+                                <Button Name="BtnAdicionarDobra" Click="BtnAdicionarDobra_Click" Height="26" Width="85" Content="Adicionar"></Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ListView Margin="10" Name="LvDobras">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="TipoDobra" Width="120" DisplayMemberBinding="{Binding TypeSkinFold}" />
+                                    <GridViewColumn Header="Valor" Width="50" DisplayMemberBinding="{Binding Value}" />
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
 

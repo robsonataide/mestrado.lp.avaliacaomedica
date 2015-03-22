@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,35 @@ namespace AnthropometryLibrary.Enums
 {
     public enum TypeSkinFoldEnum
     {
-        Triceps, SupraIliac, Abdominal, Thigh, Subscapular
+        [Description("Tríceps")]
+        Triceps,
+        [Description("Supra-ilíca")]
+        SupraIliac,
+        [Description("Abdominal")]
+        Abdominal,
+        [Description("Coxa")]
+        Thigh,
+        [Description("Subescapular")]
+        Subscapular
     }
 
     public enum MaleTypeSkinFold 
     { 
-        Triceps, SupraIliac, Abdominal 
+        [Description("Tríceps")]
+        Triceps,
+        [Description("Supra-ilíca")]
+        SupraIliac,
+        [Description("Abdominal")]
+        Abdominal 
     }
 
     public enum FemaleTypeSkinFold 
-    { 
-        Thigh, SupraIliac, Subscapular 
+    {
+        [Description("Coxa")]
+        Thigh,
+        [Description("Supra-ilíca")]
+        SupraIliac,
+        [Description("Subescapular")]
+        Subscapular 
     }
 }

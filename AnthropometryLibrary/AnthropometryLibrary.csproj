@@ -51,6 +51,7 @@
     <Compile Include="Calc\CalcLib.cs" />
     <Compile Include="Calc\RMCalcLib.cs" />
     <Compile Include="Calc\WeightsCalcLib.cs" />
+    <Compile Include="Enums\EnumHelper.cs" />
     <Compile Include="Models\BodyComposition.cs" />
     <Compile Include="Calc\BodyCompositionCalcLib.cs" />
     <Compile Include="Models\BoneMeasure.cs" />
