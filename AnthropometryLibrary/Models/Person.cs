@@ -58,7 +58,7 @@ namespace AnthropometryLibrary.Models
         {
             get{
                 if (this.TimeTest2400 != null) { 
-                    return (480 / this.TimeTest2400) +3.5;
+                    return (480 / this.TimeTest2400) + 3.5;
                 }
                 else
                 {

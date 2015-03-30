@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,32 @@ namespace AnthropometryLibrary.Enums
 {
     public enum TypeCircumferenceEnum
     {
-        Thorax, Arm, Forearm, Waist, Abdomen, Hip, Thigh, Calf
+        [Description("Tórax"), HasSide(false)]
+        Thorax,
+        [Description("Braço"), HasSide(true)]
+        Arm,
+        [Description("Antebraço"), HasSide(true)]
+        Forearm,
+        [Description("Cintura"), HasSide(false)]
+        Waist,
+        [Description("Abdomên"), HasSide(false)]
+        Abdomen,
+        [Description("Quadril"), HasSide(false)]
+        Hip,
+        [Description("Coxa"), HasSide(true)]
+        Thigh,
+        [Description("Panturrilha"), HasSide(true)]
+        Calf
+    }
+
+    public class HasSideAttribute : Attribute
+    {
+        private bool HasSide{get; set;}
+        
+        public HasSideAttribute(bool hasSide)
+        {
+            this.HasSide = hasSide;
+        }
+        
     }
 }

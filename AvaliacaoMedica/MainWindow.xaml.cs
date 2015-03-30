@@ -1,4 +1,5 @@
-﻿using AnthropometryLibrary.Enums;
+﻿using AnthropometryLibrary.Calc;
+using AnthropometryLibrary.Enums;
 using AnthropometryLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,15 @@ namespace AvaliacaoMedica
             //this.TxtAltura.KeyUp += MaskNumber;
             this.person = new Person();
             this.FillComboSexo();
+
+            TxtAltura.KeyUp += UtilUI.MaskNumber;
+            TxtIdade.KeyUp += UtilUI.MaskInt;
+            TxtPeso.KeyUp += UtilUI.MaskNumber;
+            TxtValorDobra.KeyUp += UtilUI.MaskNumber;
+            TxtBMPRepouso.KeyUp += UtilUI.MaskNumber;
+            TxtDiastolica.KeyUp += UtilUI.MaskNumber;
+            TxtSistolica.KeyUp += UtilUI.MaskNumber;
+            TxtTempo2400.KeyUp += UtilUI.MaskNumber;
             
         }
 
@@ -62,24 +72,12 @@ namespace AvaliacaoMedica
             }
         }
 
-        private void MaskNumber(object sender, KeyEventArgs e)
-        {
-            TextBox txtBox = sender as TextBox;
-            String strText = txtBox.Text;
-            int iValue = -1;
-
-            bool convert = Int32.TryParse(strText, out iValue);
-            if (!convert)
-            {
-                txtBox.Text = Regex.Replace(strText, "[^0-9.]", "");
-            }
-            txtBox.Select(txtBox.Text.Length, 0);
-        }
-
         private void CbxSexo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var genderSelected = EnumHelper.GetValueFromDescription<GenderEnum>(CbxSexo.SelectedValue.ToString());
             this.FillComboDobra(genderSelected);
+            LvDobras.Items.Clear();
+            TabMeasures.IsEnabled = true;
         }
 
         private void BtnAdicionarDobra_Click(object sender, RoutedEventArgs e)
@@ -108,6 +106,7 @@ namespace AvaliacaoMedica
                     {
                         LvDobras.Items.Refresh();
                     }
+                    TxtValorDobra.Text = String.Empty;
 
                 }
                 catch (Exception)
@@ -115,6 +114,107 @@ namespace AvaliacaoMedica
                     MessageBox.Show("Informe um valor válido.");
                 }
                 
+            }
+        }
+
+        private void FillPerson()
+        {
+            try
+            {
+                this.person.Name = TxtNome.Text;
+                this.person.Age = Convert.ToInt32(TxtIdade.Text);
+                this.person.Gender = EnumHelper.GetValueFromDescription<GenderEnum>(CbxSexo.SelectedValue.ToString());
+                this.person.Weight = Convert.ToDouble(TxtPeso.Text);
+                this.person.Height = Convert.ToDouble(TxtAltura.Text);
+                //TODO: colocar dados de pressão no obj pessoa
+                this.person.RestVO2 = Convert.ToDouble(TxtBMPRepouso.Text);
+                this.person.TimeTest2400 = Convert.ToInt64(TxtTempo2400.Text);
+                this.FillComboCircunferencia();
+            }
+            catch (Exception ex)
+            {
+                TabControl.SelectedIndex = 0;
+                TabMeasures.IsEnabled = false;
+                TabDiagnose.IsEnabled = false;
+                MessageBox.Show("Pro favor, preencha os dados corretamente.");
+            }
+        }
+
+        private void FillComboCircunferencia()
+        {
+            CbxTipoCirc.Items.Clear();
+
+            foreach (var value in Enum.GetValues(typeof(TypeCircumferenceEnum)))
+            {
+                var memInfo = typeof(TypeCircumferenceEnum).GetMember(value.ToString());
+                var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute),
+                    false);
+                var description = ((DescriptionAttribute)attributes[0]).Description;
+                CbxTipoCirc.Items.Add(description);
+            }
+        }
+
+        private void TxtTempo2400_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!(String.IsNullOrEmpty(TxtTempo2400.Text)))
+            {
+                this.person.TimeTest2400 = Convert.ToDouble(TxtTempo2400.Text);
+                this.TxtVo2.Text = Math.Round(this.person.MaxVO2, 2).ToString() + " l/m";
+                this.TxtVo2.ToolTip = "Cálculo utilizando teste de cooper (480/"+TxtTempo2400.Text+") + 3,5 ml/min.";
+                PnlVo2Max.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = sender as TabControl;
+            if (item.SelectedIndex == 1)
+            {
+                this.FillPerson();
+            }
+        }
+
+        private void BtnAdicionarCirc_Click(object sender, RoutedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(TxtValorCirc.Text) && CbxTipoCirc.SelectedValue != null)
+            {
+                try
+                {
+                    var circSelected = EnumHelper.GetValueFromDescription<TypeCircumferenceEnum>(CbxTipoCirc.SelectedValue.ToString());
+                    double valor = Convert.ToDouble(TxtValorCirc.Text);
+                    bool hasModification = false;
+                    foreach (Circumference circumference in LvCircunferencias.Items.Cast<Circumference>())
+                    {
+                        if (circumference.Type.Equals(circSelected))
+                        {
+                            circumference.Value = valor;
+                            hasModification = true;
+                        }
+                    }
+
+                    if (!hasModification)
+                    {
+                        LvCircunferencias.Items.Add(new Circumference{ Type= circSelected, Value = valor });
+                    }
+                    else
+                    {
+                        LvCircunferencias.Items.Refresh();
+                    }
+                    TxtValorCirc.Text = String.Empty;
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Informe um valor válido.");
+                }
+
+            }
+        }
+
+        private void CbxTipoCirc_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CbxTipoCirc.SelectedIndex > 0)
+            {
             }
         }
 
