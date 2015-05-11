@@ -77,7 +77,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem x:Name="TabMeasures" Header="Medidas Antropométicas" IsEnabled="False">
+            <TabItem x:Name="TabMeasures" Header="Medidas Antropométicas" >
                 <Grid Background="White" Height="474" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"/>
@@ -107,8 +107,7 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Tipo da Dobra" Width="230" DisplayMemberBinding="{Binding TypeSkinFold}" />
-                                    <GridViewColumn Header="Valor" Width="119" DisplayMemberBinding="{Binding Value}" />
-
+                                    <GridViewColumn Header="Valor" Width="117" DisplayMemberBinding="{Binding Value}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -126,7 +125,7 @@
                                     <TextBox Name="TxtValorCirc" Width="90" VerticalAlignment="Center" />
                                 </StackPanel>
                                 <StackPanel Name="PnlLado" Orientation="Horizontal" Margin="10,0,0,0" Width="159" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <RadioButton Name="RdbDireito" Content="Direito" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                    <RadioButton Name="RdbDireito" Content="Direito" VerticalAlignment="Center" Margin="10,0,0,0" IsChecked="True"/>
                                     <RadioButton Name="RdbEsquerdo" Content="Esquerdo" VerticalAlignment="Center" Margin="20,0,0,0"/>
                                 </StackPanel>
                                 
@@ -140,16 +139,16 @@
                         <ListView Margin="10,10,10,109" Name="LvCircunferencias">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Tipo de Circunferência" Width="230" DisplayMemberBinding="{Binding TypeCircumference}" />
-                                    <GridViewColumn Header="Valor" Width="119" DisplayMemberBinding="{Binding Value}" />
-
+                                    <GridViewColumn Header="Tipo de Circunferência" Width="150" DisplayMemberBinding="{Binding Type}" />
+                                    <GridViewColumn Header="Valor" Width="80" DisplayMemberBinding="{Binding Value}" />
+                                    <GridViewColumn Header="Lado" Width="80" DisplayMemberBinding="{Binding Side}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="TabDiagnose" Header="Diagnóstico" IsEnabled="False">
+            <TabItem x:Name="TabDiagnose" Header="Diagnóstico" >
                 <Grid Background="White">
                     <StackPanel Margin="10">
                         <TextBlock>Teste</TextBlock>

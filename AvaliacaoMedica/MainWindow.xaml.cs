@@ -41,6 +41,7 @@ namespace AvaliacaoMedica
             TxtDiastolica.KeyUp += UtilUI.MaskNumber;
             TxtSistolica.KeyUp += UtilUI.MaskNumber;
             TxtTempo2400.KeyUp += UtilUI.MaskNumber;
+            TxtValorCirc.KeyUp += UtilUI.MaskNumber;
             
         }
 
@@ -77,7 +78,6 @@ namespace AvaliacaoMedica
             var genderSelected = EnumHelper.GetValueFromDescription<GenderEnum>(CbxSexo.SelectedValue.ToString());
             this.FillComboDobra(genderSelected);
             LvDobras.Items.Clear();
-            TabMeasures.IsEnabled = true;
         }
 
         private void BtnAdicionarDobra_Click(object sender, RoutedEventArgs e)
@@ -142,15 +142,16 @@ namespace AvaliacaoMedica
 
         private void FillComboCircunferencia()
         {
-            CbxTipoCirc.Items.Clear();
-
-            foreach (var value in Enum.GetValues(typeof(TypeCircumferenceEnum)))
+            if (CbxTipoCirc.Items.IsEmpty)
             {
-                var memInfo = typeof(TypeCircumferenceEnum).GetMember(value.ToString());
-                var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute),
-                    false);
-                var description = ((DescriptionAttribute)attributes[0]).Description;
-                CbxTipoCirc.Items.Add(description);
+                foreach (var value in Enum.GetValues(typeof(TypeCircumferenceEnum)))
+                {
+                    var memInfo = typeof(TypeCircumferenceEnum).GetMember(value.ToString());
+                    var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute),
+                        false);
+                    var description = ((DescriptionAttribute)attributes[0]).Description;
+                    CbxTipoCirc.Items.Add(description);
+                }
             }
         }
 
@@ -165,15 +166,6 @@ namespace AvaliacaoMedica
             }
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var item = sender as TabControl;
-            if (item.SelectedIndex == 1)
-            {
-                this.FillPerson();
-            }
-        }
-
         private void BtnAdicionarCirc_Click(object sender, RoutedEventArgs e)
         {
             if (!String.IsNullOrEmpty(TxtValorCirc.Text) && CbxTipoCirc.SelectedValue != null)
@@ -181,11 +173,19 @@ namespace AvaliacaoMedica
                 try
                 {
                     var circSelected = EnumHelper.GetValueFromDescription<TypeCircumferenceEnum>(CbxTipoCirc.SelectedValue.ToString());
+                    var memInfo = typeof(TypeCircumferenceEnum).GetMember(CbxTipoCirc.SelectedValue.ToString());
+                    
+                    SideEnum side = SideEnum.Right;
+                    if(RdbEsquerdo.IsChecked.Value){
+                        side = SideEnum.Left;
+                    }
+
                     double valor = Convert.ToDouble(TxtValorCirc.Text);
+
                     bool hasModification = false;
                     foreach (Circumference circumference in LvCircunferencias.Items.Cast<Circumference>())
                     {
-                        if (circumference.Type.Equals(circSelected))
+                        if (circumference.Type.Equals(circSelected) && circumference.Side.Equals(side))
                         {
                             circumference.Value = valor;
                             hasModification = true;
@@ -194,7 +194,13 @@ namespace AvaliacaoMedica
 
                     if (!hasModification)
                     {
-                        LvCircunferencias.Items.Add(new Circumference{ Type= circSelected, Value = valor });
+                        Circumference circToAdd = new Circumference { Type = circSelected, Value = valor};
+                        if (PnlLado.IsVisible)
+                        {
+                            circToAdd.Side = side;
+                        }
+                        
+                        LvCircunferencias.Items.Add(circToAdd);
                     }
                     else
                     {
@@ -213,9 +219,26 @@ namespace AvaliacaoMedica
 
         private void CbxTipoCirc_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CbxTipoCirc.SelectedIndex > 0)
+            if (CbxTipoCirc.SelectedIndex >= 0)
             {
+                TypeCircumferenceEnum circSelected = EnumHelper.GetValueFromDescription<TypeCircumferenceEnum>(CbxTipoCirc.SelectedValue.ToString());
+                var memInfo = typeof(TypeCircumferenceEnum).GetMember(circSelected.ToString());
+                var attrs = memInfo[0].GetCustomAttributes(typeof(HasSideAttribute),false);
+                HasSideAttribute hasSide = ((HasSideAttribute)attrs[0]);
+                if (!(hasSide.HasSide))
+                {
+                    PnlLado.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    PnlLado.Visibility = Visibility.Visible;
+                }
             }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.FillComboCircunferencia();
         }
 
     }
