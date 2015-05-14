@@ -29,7 +29,7 @@ namespace AnthropometryLibrary.Enums
 
     public class HasSideAttribute : Attribute
     {
-        private bool HasSide{get; set;}
+        public bool HasSide{get; set;}
         
         public HasSideAttribute(bool hasSide)
         {
