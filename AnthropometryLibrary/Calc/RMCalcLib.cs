@@ -30,9 +30,10 @@ namespace AnthropometryLibrary.Calc
         private void OneMaxLoadCalc(TypeRMEnum type){
             if (this.person.MaxLoadsForOneRepeatTime != null) { 
                 Load maxload = this.person.MaxLoadsForOneRepeatTime.Where(rm => rm.TypeRM.Equals(type)).First<Load>();
+                
                 if (type.Equals(TypeRMEnum.ExtensaoJoelho))
                 {
-                    //Brzycki8
+                    //Brzycki
                     maxload.MaxLoad = (maxload.SubMaxLoad) / (1.0278 - (maxload.RepeatAmount * 0.0278));
                 }
                 else

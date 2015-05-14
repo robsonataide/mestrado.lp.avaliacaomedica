@@ -32,15 +32,18 @@ namespace AvaliacaoMedica
             //this.TxtAltura.KeyUp += MaskNumber;
             this.person = new Person();
             this.FillComboSexo();
-
+            this.FillComboCircunferencia();
             TxtAltura.KeyUp += UtilUI.MaskNumber;
             TxtIdade.KeyUp += UtilUI.MaskInt;
             TxtPeso.KeyUp += UtilUI.MaskNumber;
-            TxtValorDobra.KeyUp += UtilUI.MaskNumber;
+            
             TxtBMPRepouso.KeyUp += UtilUI.MaskNumber;
             TxtDiastolica.KeyUp += UtilUI.MaskNumber;
             TxtSistolica.KeyUp += UtilUI.MaskNumber;
             TxtTempo2400.KeyUp += UtilUI.MaskNumber;
+            
+            TxtValorDobra.KeyUp += UtilUI.MaskNumber;
+            TxtValorCirc.KeyUp += UtilUI.MaskNumber;
             
         }
 
@@ -95,12 +98,15 @@ namespace AvaliacaoMedica
                         {
                             skinfold.Value = valor;
                             hasModification = true;
+                            this.person.SkinFolds.Where<SkinFold>(sf => sf.TypeSkinFold.Equals(skinfoldSelected)).FirstOrDefault<SkinFold>().Value = valor;
                         }
                     }
 
                     if (!hasModification)
                     {
-                        LvDobras.Items.Add(new SkinFold { TypeSkinFold = skinfoldSelected, Value = valor });
+                        SkinFold skinfold = new SkinFold { TypeSkinFold = skinfoldSelected, Value = valor };
+                        LvDobras.Items.Add(skinfold);
+                        this.person.SkinFolds.Add(skinfold);
                     }
                     else
                     {
@@ -129,7 +135,7 @@ namespace AvaliacaoMedica
                 //TODO: colocar dados de pressão no obj pessoa
                 this.person.RestVO2 = Convert.ToDouble(TxtBMPRepouso.Text);
                 this.person.TimeTest2400 = Convert.ToInt64(TxtTempo2400.Text);
-                this.FillComboCircunferencia();
+
             }
             catch (Exception ex)
             {
@@ -167,21 +173,24 @@ namespace AvaliacaoMedica
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = sender as TabControl;
-            if (item.SelectedIndex == 1)
-            {
-                this.FillPerson();
-            }
+            this.FillPerson();
         }
 
         private void BtnAdicionarCirc_Click(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrEmpty(TxtValorCirc.Text) && CbxTipoCirc.SelectedValue != null)
+            if (!String.IsNullOrEmpty(TxtValorCirc.Text) && CbxTipoCirc.SelectedValue != null && !(String.IsNullOrEmpty(CbxTipoCirc.SelectedValue.ToString())))
             {
                 try
                 {
                     var circSelected = EnumHelper.GetValueFromDescription<TypeCircumferenceEnum>(CbxTipoCirc.SelectedValue.ToString());
                     double valor = Convert.ToDouble(TxtValorCirc.Text);
+
+                    if (!RdbDireito.IsChecked.Value && !RdbEsquerdo.IsChecked.Value)
+                    {
+                        MessageBox.Show("Selecione o lado.");
+                        throw new Exception("Selecione o lado.");
+                    }
+
                     bool hasModification = false;
                     foreach (Circumference circumference in LvCircunferencias.Items.Cast<Circumference>())
                     {
@@ -208,13 +217,7 @@ namespace AvaliacaoMedica
                     MessageBox.Show("Informe um valor válido.");
                 }
 
-            }
-        }
-
-        private void CbxTipoCirc_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (CbxTipoCirc.SelectedIndex > 0)
-            {
+                
             }
         }
 

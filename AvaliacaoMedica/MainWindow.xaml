@@ -13,7 +13,7 @@
             <Label FontFamily="Segoe UI Light" FontSize="24">Ferramenta de Diagnóstico Físico</Label>
         </Grid>
 
-        <TabControl x:Name="TabControl" Margin="10" VerticalAlignment="Stretch" Grid.Row="1" HorizontalAlignment="Stretch" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl x:Name="TabControl" Margin="10" VerticalAlignment="Stretch" Grid.Row="1" HorizontalAlignment="Stretch">
             <TabItem x:Name="TabMain" Header="Avaliação Médica">
                 <Grid Background="White" Margin="10">
                     <Grid.ColumnDefinitions>
