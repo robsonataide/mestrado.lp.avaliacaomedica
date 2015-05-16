@@ -35,6 +35,7 @@ namespace AnthropometryLibrary.Enums
         {
             this.HasSide = hasSide;
         }
+
         
     }
 }

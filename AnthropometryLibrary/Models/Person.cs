@@ -9,6 +9,14 @@ namespace AnthropometryLibrary.Models
 {
     public class Person
     {
+
+        public Person()
+        {
+            this.SkinFolds = new List<SkinFold>();
+            this.Circumferences = new List<Circumference>();
+            this.MaxLoads = new List<Load>();
+        }
+        
         //entrada de dado
         public String Name { get; set; }
         //entrada de dado
